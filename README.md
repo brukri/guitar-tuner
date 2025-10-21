@@ -51,10 +51,20 @@ Or via CLI:
 - `netlify deploy --prod` (for production)
 
 ### GitHub Pages
-For static hosting (no server needed):
+Two easy options:
+
+Option A — GitHub Actions (auto deploy on push)
+- Ensure your default branch is `main` or `master`.
+- Push this repo to GitHub.
+- Pages settings: Repository Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+- This repo already includes .github/workflows/deploy-pages.yml which will:
+  - build with PNPM, set the correct Vite base path for your repo name, and publish `dist/` to Pages.
+- On the next push to main/master, it will deploy to https://<your-username>.github.io/<repo-name>/.
+
+Option B — Manual publish of dist/
 - `pnpm build`
-- Put the contents of `dist/` on a `gh-pages` branch (e.g., with `gh-pages` package) or use GitHub Actions to publish `dist/`.
-- If deploying to a subpath (e.g., `/repo-name/`), set `base` in `vite.config.ts` accordingly.
+- Put the contents of `dist/` on a `gh-pages` branch (e.g., with `gh-pages` package) or upload via the Pages artifact UI).
+- If deploying to a subpath (e.g., `/repo-name/`), the included workflow or setting `base` in `vite.config.ts` will handle correct asset paths.
 
 ## Microphone and HTTPS notes
 - Browsers require a secure context (HTTPS) for `getUserMedia` microphone access.
